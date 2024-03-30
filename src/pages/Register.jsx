@@ -1,13 +1,12 @@
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import app from "../firebase/firebase.init";
 import { Link } from "react-router-dom";
+import auth from "../firebase/firebase.init";
 
 const Register = () => {
 
-    const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
     const googleButton = () => {
@@ -20,13 +19,20 @@ const Register = () => {
             })
     }
 
+    const handleRegister = e => {
+        e.preventDefault();
+        console.log('Email: ' + e.target.email.value);
+        console.log('Password 1: ' + e.target.password1.value);
+        console.log('Password 2: ' + e.target.password2.value);
+    }
+
     return (
         <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
 
             <h1 className="text-2xl font-bold mb-8">Register Now</h1>
 
 
-            <form action="">
+            <form onSubmit={handleRegister}>
 
                     <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full mb-1" />
 

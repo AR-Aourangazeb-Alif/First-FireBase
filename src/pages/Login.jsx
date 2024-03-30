@@ -1,16 +1,15 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FaXTwitter } from "react-icons/fa6";
 
-import app from "../firebase/firebase.init";
 import { Link } from "react-router-dom";
+import auth from "../firebase/firebase.init";
 
 
 
 const Login = () => {
 
-    const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
 
@@ -25,6 +24,12 @@ const Login = () => {
             })
     }
 
+    const handleLogin = e => {
+        e.preventDefault();
+        console.log('Email: ' + e.target.email.value);
+        console.log('Password: ' + e.target.password.value);
+    }
+
 
     return (
         <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
@@ -32,7 +37,7 @@ const Login = () => {
             <h1 className="text-2xl font-bold mb-8">Login in your account</h1>
 
 
-            <form action="">
+            <form onSubmit={handleLogin}>
                 <div className="flex items-center gap-1 mb-4">
                     <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
 
