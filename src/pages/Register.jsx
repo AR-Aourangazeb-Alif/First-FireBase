@@ -1,45 +1,44 @@
-import { FcGoogle } from "react-icons/fc";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { FaGithub } from "react-icons/fa";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { FaXTwitter } from "react-icons/fa6";
-
+import { FcGoogle } from "react-icons/fc";
 import app from "../firebase/firebase.init";
 import { Link } from "react-router-dom";
 
-
-
-const Login = () => {
+const Register = () => {
 
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-
     const googleButton = () => {
         signInWithPopup(auth, provider)
-            .then((result) => {
-                const user = result.user;
-                console.log(user);
+            .then(result => {
+                console.log(result.user);
             })
             .catch(error => {
                 console.log(error);
             })
     }
 
-
     return (
         <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
 
-            <h1 className="text-2xl font-bold mb-8">Login in your account</h1>
+            <h1 className="text-2xl font-bold mb-8">Register Now</h1>
 
 
             <form action="">
-                <div className="flex items-center gap-1 mb-4">
-                    <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
 
-                    <input type="password" name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+                    <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full mb-1" />
+
+                <div className="flex items-center gap-1 mb-4">
+
+                        <input type="password" name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+
+                        <input type="password" name="password2" id="password2" placeholder="Rewrite your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+
                 </div>
 
-                <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Login with email</button>
+                <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Register with email</button>
             </form>
 
 
@@ -67,13 +66,13 @@ const Login = () => {
             </div>
 
 
-            <Link
-                to={'register'}
-                className="text-sm text-accent mx-auto">Don&apos;t Have an account? <span className="font-bold">Register</span></Link>
+            <Link 
+            to={'/form'}
+            className="text-sm text-accent mx-auto">Already Have an account? <span className="font-bold">Login</span></Link>
 
 
         </div>
     );
 };
 
-export default Login;
+export default Register;

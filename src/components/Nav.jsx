@@ -57,7 +57,7 @@ const Nav = () => {
 
             <div className="flex items-center gap-3 font-bold">
                 <Link
-                    to={"/login"}
+                    to={"/form"}
                     className="px-4 py-2 border-2 border-primary rounded-md hover:bg-primary hover:text-primary-content transition-all">LogIn</Link>
 
                 <label className="swap swap-rotate">
