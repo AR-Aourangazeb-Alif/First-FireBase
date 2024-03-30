@@ -15,7 +15,10 @@ const Nav = () => {
         const newTheme = !theme;
         setTheme(newTheme);
         localStorage.setItem('theme', newTheme);
+        document.querySelector('html').setAttribute('data-theme', `${newTheme ? 'sunset' : 'light'}`)
+        console.log(newTheme)
     }
+
 
     return (
         <div className="flex items-center justify-between py-6">
