@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
-    let localTheme;
 
     const [theme, setTheme] = useState(()=>{
         if(localStorage.getItem('theme')){
@@ -13,20 +12,10 @@ const Nav = () => {
     });
 
     const changeTheme = () => {
-        setTheme(!theme)
+        const newTheme = !theme;
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
     }
-
-    useEffect(()=>{
-        localStorage.setItem('theme', theme);
-    },[theme])
-
-    localTheme = localStorage.getItem('theme')==='true';
-    console.log(localTheme);
-    console.log(theme);
-    console.log(localStorage.getItem('theme'))
-
-    
-
 
     return (
         <div className="flex items-center justify-between py-6">
@@ -73,7 +62,7 @@ const Nav = () => {
                     {/* this hidden checkbox controls the state */}
                     <input type="checkbox" 
                     onChange={changeTheme}
-                    checked={!localTheme}
+                    checked={localStorage.getItem('theme')==='true'}
                     
                     className="theme-controller" value="sunset" />
 
