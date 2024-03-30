@@ -3,7 +3,6 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import app from "../firebase/firebase.init";
-import { useEffect } from "react";
 
 
 
