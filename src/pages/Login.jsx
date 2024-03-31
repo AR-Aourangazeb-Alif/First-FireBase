@@ -10,11 +10,11 @@ import auth from "../firebase/firebase.init";
 
 const Login = () => {
 
-    const provider = new GoogleAuthProvider();
+    const googleProvider = new GoogleAuthProvider();
 
 
     const googleButton = () => {
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 console.log(user);

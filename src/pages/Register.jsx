@@ -1,16 +1,24 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import auth from "../firebase/firebase.init";
+import { useState } from "react";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+
 
 const Register = () => {
 
-    const provider = new GoogleAuthProvider();
+    const [handleError, setHandleError] = useState('');
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    //google Authentication
+    const googleProvider = new GoogleAuthProvider();
 
     const googleButton = () => {
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, googleProvider)
             .then(result => {
                 console.log(result.user);
             })
@@ -19,11 +27,54 @@ const Register = () => {
             })
     }
 
+
+    // Create user with email and password
+
     const handleRegister = e => {
         e.preventDefault();
-        console.log('Email: ' + e.target.email.value);
-        console.log('Password 1: ' + e.target.password1.value);
-        console.log('Password 2: ' + e.target.password2.value);
+        const email = e.target.email.value;
+        const password1 = e.target.password1.value;
+        const password2 = e.target.password2.value;
+        const password = password1 === password2 ? password1 : null;
+
+        //clearing error
+        setHandleError('');
+
+        if (!password) {
+            setHandleError('Passwords do not match');
+            return;
+        } else if (password.length < 6) {
+            setHandleError('Password must be at least 6 characters or longer');
+            return;
+        } else if (!/[a-zA-Z]/.test(password)) {
+            setHandleError('Password must include alphabets');
+            return;
+        }
+        else if (!/[A-Z]/.test(password)) {
+            setHandleError('Password must include uppercase letters');
+            return;
+        } else if (!/[a-z]/.test(password)) {
+            setHandleError('Password must include lowercase letters');
+            return;
+        } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            setHandleError('Password must include atleast one symbol [!@#$%^&*(),.?":{}|<>]');
+            return;
+        }
+
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                console.log(result.user);
+            })
+            .catch(error => {
+                console.log(error);
+
+                if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+                    setHandleError('Email already in use ! ! !');
+                }
+            })
+
+
     }
 
     return (
@@ -34,17 +85,34 @@ const Register = () => {
 
             <form onSubmit={handleRegister}>
 
-                    <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full mb-1" />
+                <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full mb-2" required />
 
-                <div className="flex items-center gap-1 mb-4">
+                <div className="flex items-center gap-2 mb-6">
 
-                        <input type="password" name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+                    <div className="flex-1 h-fit relative">
+                        <input type={showPassword ? "text" : "password"} name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 pr-8 outline-accent w-full" required />
 
-                        <input type="password" name="password2" id="password2" placeholder="Rewrite your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+                        <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-3 right-2 text-xl text-accent">
+
+                            {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
+
+                        </span>
+                    </div>
+
+                    <div className="flex-1 h-fit">
+                        <input type="password" name="password2" id="password2" placeholder="Confirm your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" required />
+                    </div>
+
 
                 </div>
 
-                <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Register with email</button>
+                <div className="relative">
+                    <p className="text-red-400 absolute -top-5 text-sm font-medium">
+                        {handleError ? handleError : ''}
+                    </p>
+
+                    <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Register with email</button>
+                </div>
             </form>
 
 
@@ -54,7 +122,7 @@ const Register = () => {
                 <div className="flex-1 border border-primary-content"></div>
             </div>
 
-            <div className="flex items-center px-10 justify-center gap-8 mb-14">
+            <div className="flex items-center px-10 justify-center gap-8 mb-10">
 
                 <button className="p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform" onClick={googleButton}>
                     <FcGoogle />
@@ -72,9 +140,10 @@ const Register = () => {
             </div>
 
 
-            <Link 
-            to={'/form'}
-            className="text-sm text-accent mx-auto">Already Have an account? <span className="font-bold">Login</span></Link>
+            <Link
+                to={'/form'}
+                className="text-sm text-accent mx-auto">Already Have an account? <span className="font-bold">Login</span>
+            </Link>
 
 
         </div>
