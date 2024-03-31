@@ -25,15 +25,15 @@ const ForgetPassword = () => {
     return (
         <div className="w-[100svw] h-[100svh] flex justify-center items-center">
 
-            <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
+            <div className="bg-base-300 w-[90%] max-w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
 
                 <h1 className="text-2xl font-bold mb-8">Reset Password</h1>
 
 
                 <form className="mb-4" onSubmit={resetPassword}>
-                    <input type="email" name="reset" id="reset" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full mb-8" required />
+                    <input type="email" name="reset" id="reset" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-4 px-4 outline-primary w-full mb-8" required />
 
-                    <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full text-base-100">Send reset email</button>
+                    <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full text-base-100 text-lg">Send reset email</button>
                 </form>
 
                 <Link

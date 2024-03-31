@@ -66,7 +66,7 @@ const Login = () => {
     return (
         <div className="w-[100svw] h-[100svh] flex justify-center items-center">
 
-            <div className="bg-base-300 w-1/2 max-w-[600px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
+            <div className="bg-base-300 w-[95%] max-w-[600px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
 
                 <h1 className="text-2xl font-bold mb-8">Login in your account</h1>
 
