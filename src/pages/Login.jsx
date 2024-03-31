@@ -45,7 +45,11 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
-                setSuccess('Successfully Logged In');
+                if(result.user.emailVerified){
+                    setSuccess('Successfully Logged In');
+                }else{
+                    setHandleError('Email is not verified !')
+                }
             })
             .catch(error => {
                 console.log(error.message);
@@ -62,26 +66,30 @@ const Login = () => {
     return (
         <div className="w-[100svw] h-[100svh] flex justify-center items-center">
 
-            <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
+            <div className="bg-base-300 w-1/2 max-w-[600px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
 
                 <h1 className="text-2xl font-bold mb-8">Login in your account</h1>
 
 
                 <form onSubmit={handleLogin}>
-                    <div className="flex items-center gap-2 mb-6">
+                    <div className="flex items-center gap-2 mb-14 relative">
                         <div className="flex-1">
-                            <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full" required />
+                            <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-4 px-4 outline-primary w-full" required />
                         </div>
 
                         <div className="flex-1 relative">
-                            <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-primary w-full pr-8" required />
+                            <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-4 pl-4 outline-primary w-full pr-8" required />
 
-                            <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer text-primary">
+                            <span onClick={() => setShowPassword(!showPassword)} className="text-2xl absolute top-4 right-2 cursor-pointer text-primary">
                                 {
                                     showPassword ? <IoIosEye /> : <IoIosEyeOff />
                                 }
                             </span>
                         </div>
+
+                        <Link 
+                        to={'/forgetPassword'}
+                        className="absolute left-2 -bottom-6 text-primary text-sm hover:underline">Forget Password?</Link>
                     </div>
 
                     <div className="w-full h-fit mb-10 relative">
@@ -89,7 +97,7 @@ const Login = () => {
                             {success ? success : handleError ? handleError : ''}
                         </p>
 
-                        <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full text-base-100">Login with email</button>
+                        <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform text-lg font-medium w-full text-base-100">Login with email</button>
 
                     </div>
                 </form>
@@ -120,7 +128,7 @@ const Login = () => {
 
 
                 <Link
-                    to={'register'}
+                    to={'/register'}
                     className="text-sm text-primary mx-auto">Don&apos;t Have an account? <span className="font-bold">Register</span></Link>
 
 

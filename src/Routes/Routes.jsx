@@ -5,6 +5,7 @@ import Blog from "../pages/Blog"
 import Contacts from "../pages/Contacts"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
+import ForgetPassword from "../pages/ForgetPassword"
 
 const router = createBrowserRouter([
   {
@@ -21,18 +22,22 @@ const router = createBrowserRouter([
       },
       {
         path: '/contacts',
-        element: <Contacts></Contacts>
+        element: <Contacts></Contacts>,
       },
 
     ]
   },
   {
     path: '/login',
-    element: <Login></Login>
+    element: <Login></Login>,
   },
   {
     path: '/register',
-    element: <Register></Register>
+    element: <Register></Register>,
+  },
+  {
+    path: '/forgetPassword',
+    element: <ForgetPassword></ForgetPassword>,
   }
 ])
 export default router

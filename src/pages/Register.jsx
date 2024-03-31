@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup, updateProfile } from "firebase/auth";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
@@ -40,6 +40,9 @@ const Register = () => {
         const password1 = e.target.password1.value;
         const password2 = e.target.password2.value;
         const password = password1 === password2 ? password1 : null;
+        const name = e.target.name.value;
+
+        console.log(email, password, name);
 
         //clearing error
         setHandleError('');
@@ -78,7 +81,16 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
-                setHandleSuccess('User registered successfully !')
+                setHandleSuccess('User registered successfully !');
+
+                updateProfile(result.user, {
+                    displayName: name,
+                });
+
+                sendEmailVerification(result.user)
+                .then(() => {
+                    alert('Please check your email for verification')
+                })
             })
             .catch(error => {
                 console.log(error);
@@ -88,7 +100,9 @@ const Register = () => {
                 } else {
                     handleError(error.message);
                 }
-            })
+            });
+
+        
 
 
     }
@@ -97,21 +111,25 @@ const Register = () => {
 
         <div className="w-[100svw] h-[100svh] flex justify-center items-center">
 
-            <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
+            <div className="bg-base-300 w-1/2 max-w-[600px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
 
                 <h1 className="text-2xl font-bold mb-8">Register Now</h1>
 
 
                 <form onSubmit={handleRegister}>
 
-                    <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full mb-2" required />
+                    <div className="flex gap-2">
+                        <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-4 px-4 outline-primary w-full mb-2" required />
+
+                        <input type="text" name="name" id="name" placeholder="Enter your name" className="border border-primary-content rounded-lg py-4 px-4 outline-primary w-full mb-2" required />
+                    </div>
 
                     <div className="flex items-center gap-2 mb-2">
 
                         <div className="flex-1 h-fit relative">
-                            <input type={showPassword ? "text" : "password"} name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 pr-8 outline-primary w-full" required />
+                            <input type={showPassword ? "text" : "password"} name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-4 pl-4 pr-8 outline-primary w-full" required />
 
-                            <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-3 right-2 text-xl text-primary">
+                            <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-4 right-2 text-2xl text-primary">
 
                                 {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
 
@@ -119,7 +137,7 @@ const Register = () => {
                         </div>
 
                         <div className="flex-1 h-fit">
-                            <input type="password" name="password2" id="password2" placeholder="Confirm your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full" required />
+                            <input type="password" name="password2" id="password2" placeholder="Confirm your password" className="border border-primary-content rounded-lg py-4 px-4 outline-primary w-full" required />
                         </div>
 
 
@@ -135,7 +153,7 @@ const Register = () => {
                             {handleError ? handleError : handleSuccess ? handleSuccess : ''}
                         </p>
 
-                        <button className="bg-primary py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full text-base-100">Register with email</button>
+                        <button className="bg-primary py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform text-lg font-medium w-full text-base-100">Register with email</button>
                     </div>
                 </form>
 
@@ -165,7 +183,7 @@ const Register = () => {
 
 
                 <Link
-                    to={'/form'}
+                    to={'/login'}
                     className="text-sm text-primary mx-auto">Already Have an account? <span className="font-bold">Login</span>
                 </Link>
 
