@@ -1,14 +1,21 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { FaXTwitter } from "react-icons/fa6";
 
 import { Link } from "react-router-dom";
 import auth from "../firebase/firebase.init";
-
+import { useState } from "react";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 
 const Login = () => {
+
+    const [success, setSuccess] = useState('');
+    const [handleError, setHandleError] = useState('');
+
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const googleProvider = new GoogleAuthProvider();
 
@@ -26,8 +33,27 @@ const Login = () => {
 
     const handleLogin = e => {
         e.preventDefault();
-        console.log('Email: ' + e.target.email.value);
-        console.log('Password: ' + e.target.password.value);
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        //resetting error and success msg
+        setSuccess('');
+        setHandleError('');
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                console.log(result.user);
+                setSuccess('Successfully Logged In');
+            })
+            .catch(error => {
+                console.log(error.message);
+
+                if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+                    setHandleError('Incorrect email or password');
+                } else {
+                    setHandleError('Something went wrong: ' + error.message);
+                }
+            })
     }
 
 
@@ -38,13 +64,30 @@ const Login = () => {
 
 
             <form onSubmit={handleLogin}>
-                <div className="flex items-center gap-1 mb-4">
-                    <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+                <div className="flex items-center gap-2 mb-6">
+                    <div className="flex-1">
+                        <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" required />
+                    </div>
 
-                    <input type="password" name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" />
+                    <div className="flex-1 relative">
+                        <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-accent w-full pr-8" required />
+
+                        <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer">
+                            {
+                                showPassword ? <IoIosEye /> : <IoIosEyeOff />
+                            }
+                        </span>
+                    </div>
                 </div>
 
-                <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Login with email</button>
+                <div className="w-full h-fit mb-10 relative">
+                    <p className={`${success ? 'text-green-400' : handleError ? 'text-red-400' : ''} absolute -top-5 text-sm font-medium`}>
+                        {success ? success : handleError ? handleError : ''}
+                    </p>
+
+                    <button className="bg-accent py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full">Login with email</button>
+
+                </div>
             </form>
 
 
