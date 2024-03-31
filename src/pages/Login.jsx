@@ -81,7 +81,7 @@ const Login = () => {
                 </div>
 
                 <div className="w-full h-fit mb-10 relative">
-                    <p className={`${success ? 'text-green-400' : handleError ? 'text-red-400' : ''} absolute -top-5 text-sm font-medium`}>
+                    <p className={`${success ? 'text-green-400' : handleError ? 'text-red-400' : ''} absolute -top-5 left-2 text-sm font-medium`}>
                         {success ? success : handleError ? handleError : ''}
                     </p>
 

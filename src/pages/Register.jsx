@@ -126,7 +126,7 @@ const Register = () => {
                 </div>
 
                 <div className="relative">
-                    <p className={`${handleError ? 'text-red-400' : 'text-green-400'} absolute -top-5 text-sm font-medium`}>
+                    <p className={`${handleError ? 'text-red-400' : 'text-green-400'} absolute -top-5 text-sm left-2 font-medium`}>
                         {handleError ? handleError : handleSuccess ? handleSuccess : ''}
                     </p>
 
