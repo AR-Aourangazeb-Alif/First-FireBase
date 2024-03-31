@@ -59,11 +59,11 @@ const Nav = () => {
 
                 <div className="flex items-center gap-3">
                     <Link
-                        to={"/form"}
+                        to={"/login"}
                         className="px-4 py-2 border-2 border-primary rounded-md hover:bg-primary hover:text-primary-content transition-all">LogIn</Link>
 
                     <Link
-                        to={"/form/register"}
+                        to={"/register"}
                         className="px-4 py-2 border-2 border-primary rounded-md hover:bg-primary hover:text-primary-content transition-all">Register</Link>
                 </div>
 

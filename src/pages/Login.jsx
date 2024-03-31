@@ -10,6 +10,8 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 
 const Login = () => {
+    document.querySelector('html').setAttribute('data-theme', `${localStorage.getItem('theme') === 'true' ? 'sunset' : 'light'}`);
+
 
     const [success, setSuccess] = useState('');
     const [handleError, setHandleError] = useState('');
@@ -58,69 +60,75 @@ const Login = () => {
 
 
     return (
-        <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
+        <div className="w-[100svw] h-[100svh] flex justify-center items-center">
 
-            <h1 className="text-2xl font-bold mb-8">Login in your account</h1>
+            <div className="bg-base-300 w-[500px] h-auto rounded-3xl shadow-2xl flex flex-col p-6">
+
+                <h1 className="text-2xl font-bold mb-8">Login in your account</h1>
 
 
-            <form onSubmit={handleLogin}>
-                <div className="flex items-center gap-2 mb-6">
-                    <div className="flex-1">
-                        <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full" required />
+                <form onSubmit={handleLogin}>
+                    <div className="flex items-center gap-2 mb-6">
+                        <div className="flex-1">
+                            <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full" required />
+                        </div>
+
+                        <div className="flex-1 relative">
+                            <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-primary w-full pr-8" required />
+
+                            <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer text-primary">
+                                {
+                                    showPassword ? <IoIosEye /> : <IoIosEyeOff />
+                                }
+                            </span>
+                        </div>
                     </div>
 
-                    <div className="flex-1 relative">
-                        <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-primary w-full pr-8" required />
+                    <div className="w-full h-fit mb-10 relative">
+                        <p className={`${success ? 'text-green-400' : handleError ? 'text-red-400' : ''} absolute -top-5 left-2 text-sm font-medium`}>
+                            {success ? success : handleError ? handleError : ''}
+                        </p>
 
-                        <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer text-primary">
-                            {
-                                showPassword ? <IoIosEye /> : <IoIosEyeOff />
-                            }
-                        </span>
+                        <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full text-base-100">Login with email</button>
+
                     </div>
+                </form>
+
+
+                <div className="flex items-center gap-2 mb-8">
+                    <div className="flex-1 border border-primary-content"></div>
+                    <h6 className="text-sm">or use one of these options</h6>
+                    <div className="flex-1 border border-primary-content"></div>
                 </div>
 
-                <div className="w-full h-fit mb-10 relative">
-                    <p className={`${success ? 'text-green-400' : handleError ? 'text-red-400' : ''} absolute -top-5 left-2 text-sm font-medium`}>
-                        {success ? success : handleError ? handleError : ''}
-                    </p>
+                <div className="flex items-center px-10 justify-center gap-8 mb-14">
 
-                    <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full text-base-100">Login with email</button>
+                    <button className="p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform" onClick={googleButton}>
+                        <FcGoogle />
+                    </button>
+
+                    <button className={`p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform ${localStorage.getItem('theme') === 'true' ? 'text-[#F1F1F1]' : 'text-[#000000]'}`}>
+                        <FaXTwitter />
+                    </button>
+
+                    <button className={`p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform ${localStorage.getItem('theme') === 'true' ? 'text-[#F7F7F7]' : 'text-[#161414]'}`}>
+                        <FaGithub />
+                    </button>
+
 
                 </div>
-            </form>
 
 
-            <div className="flex items-center gap-2 mb-8">
-                <div className="flex-1 border border-primary-content"></div>
-                <h6 className="text-sm">or use one of these options</h6>
-                <div className="flex-1 border border-primary-content"></div>
-            </div>
-
-            <div className="flex items-center px-10 justify-center gap-8 mb-14">
-
-                <button className="p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform" onClick={googleButton}>
-                    <FcGoogle />
-                </button>
-
-                <button className={`p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform ${localStorage.getItem('theme') === 'true' ? 'text-[#F1F1F1]' : 'text-[#000000]'}`}>
-                    <FaXTwitter />
-                </button>
-
-                <button className={`p-5 border text-3xl border-primary-content rounded-lg shadow-lg active:scale-95 transition-transform ${localStorage.getItem('theme') === 'true' ? 'text-[#F7F7F7]' : 'text-[#161414]'}`}>
-                    <FaGithub />
-                </button>
+                <Link
+                    to={'register'}
+                    className="text-sm text-primary mx-auto">Don&apos;t Have an account? <span className="font-bold">Register</span></Link>
 
 
             </div>
-
-
-            <Link
-                to={'register'}
-                className="text-sm text-primary mx-auto">Don&apos;t Have an account? <span className="font-bold">Register</span></Link>
-
 
         </div>
+
+
     );
 };
 
