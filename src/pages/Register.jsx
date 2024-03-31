@@ -11,6 +11,8 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 const Register = () => {
 
     const [handleError, setHandleError] = useState('');
+    const [handleSuccess, setHandleSuccess] = useState('');
+
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -39,11 +41,16 @@ const Register = () => {
 
         //clearing error
         setHandleError('');
+        setHandleSuccess('');
 
         if (!password) {
             setHandleError('Passwords do not match');
             return;
-        } else if (password.length < 6) {
+        } else if(!e.target.terms.checked){
+            setHandleError('Accept our terms and conditions');
+            return;
+        }
+        else if (password.length < 6) {
             setHandleError('Password must be at least 6 characters or longer');
             return;
         } else if (!/[a-zA-Z]/.test(password)) {
@@ -56,7 +63,11 @@ const Register = () => {
         } else if (!/[a-z]/.test(password)) {
             setHandleError('Password must include lowercase letters');
             return;
-        } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        } else if (!/\d/.test(password)) {
+            setHandleError('Password must include numbers');
+            return;
+        }
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
             setHandleError('Password must include atleast one symbol [!@#$%^&*(),.?":{}|<>]');
             return;
         }
@@ -65,12 +76,15 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                setHandleSuccess('User registered successfully !')
             })
             .catch(error => {
                 console.log(error);
 
                 if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
                     setHandleError('Email already in use ! ! !');
+                }else{
+                    handleError(error.message);
                 }
             })
 
@@ -87,7 +101,7 @@ const Register = () => {
 
                 <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full mb-2" required />
 
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-center gap-2 mb-2">
 
                     <div className="flex-1 h-fit relative">
                         <input type={showPassword ? "text" : "password"} name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 pr-8 outline-accent w-full" required />
@@ -106,9 +120,14 @@ const Register = () => {
 
                 </div>
 
+                <div className="mb-6 flex items-center gap-2">
+                    <input type="checkbox" name="terms" id="terms" />
+                    <label htmlFor="terms" className="text-info"><a href="">Accept terms and conditions</a></label>
+                </div>
+
                 <div className="relative">
-                    <p className="text-red-400 absolute -top-5 text-sm font-medium">
-                        {handleError ? handleError : ''}
+                    <p className={`${handleError ? 'text-red-400' : 'text-green-400'} absolute -top-5 text-sm font-medium`}>
+                        {handleError ? handleError : handleSuccess ? handleSuccess : ''}
                     </p>
 
                     <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Register with email</button>
