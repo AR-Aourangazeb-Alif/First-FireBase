@@ -66,13 +66,13 @@ const Login = () => {
             <form onSubmit={handleLogin}>
                 <div className="flex items-center gap-2 mb-6">
                     <div className="flex-1">
-                        <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" required />
+                        <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full" required />
                     </div>
 
                     <div className="flex-1 relative">
-                        <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-accent w-full pr-8" required />
+                        <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-primary w-full pr-8" required />
 
-                        <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer text-accent">
+                        <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer text-primary">
                             {
                                 showPassword ? <IoIosEye /> : <IoIosEyeOff />
                             }
@@ -85,7 +85,7 @@ const Login = () => {
                         {success ? success : handleError ? handleError : ''}
                     </p>
 
-                    <button className="bg-accent py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full">Login with email</button>
+                    <button className="bg-primary py-4 flex justify-center rounded-xl active:scale-95 transition-transform font-medium w-full text-base-100">Login with email</button>
 
                 </div>
             </form>
@@ -117,7 +117,7 @@ const Login = () => {
 
             <Link
                 to={'register'}
-                className="text-sm text-accent mx-auto">Don&apos;t Have an account? <span className="font-bold">Register</span></Link>
+                className="text-sm text-primary mx-auto">Don&apos;t Have an account? <span className="font-bold">Register</span></Link>
 
 
         </div>

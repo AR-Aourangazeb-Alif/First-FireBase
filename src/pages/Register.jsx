@@ -99,14 +99,14 @@ const Register = () => {
 
             <form onSubmit={handleRegister}>
 
-                <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full mb-2" required />
+                <input type="email" name="email" id="email" placeholder="Enter your email address" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full mb-2" required />
 
                 <div className="flex items-center gap-2 mb-2">
 
                     <div className="flex-1 h-fit relative">
-                        <input type={showPassword ? "text" : "password"} name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 pr-8 outline-accent w-full" required />
+                        <input type={showPassword ? "text" : "password"} name="password1" id="password1" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 pr-8 outline-primary w-full" required />
 
-                        <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-3 right-2 text-xl text-accent">
+                        <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-3 right-2 text-xl text-primary">
 
                             {showPassword ? <IoIosEye /> : <IoIosEyeOff />}
 
@@ -114,7 +114,7 @@ const Register = () => {
                     </div>
 
                     <div className="flex-1 h-fit">
-                        <input type="password" name="password2" id="password2" placeholder="Confirm your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-accent w-full" required />
+                        <input type="password" name="password2" id="password2" placeholder="Confirm your password" className="border border-primary-content rounded-lg py-2.5 px-4 outline-primary w-full" required />
                     </div>
 
 
@@ -130,14 +130,14 @@ const Register = () => {
                         {handleError ? handleError : handleSuccess ? handleSuccess : ''}
                     </p>
 
-                    <button className="bg-accent py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full">Register with email</button>
+                    <button className="bg-primary py-4 flex justify-center rounded-xl mb-10 active:scale-95 transition-transform font-medium w-full text-base-100">Register with email</button>
                 </div>
             </form>
 
 
             <div className="flex items-center gap-2 mb-8">
                 <div className="flex-1 border border-primary-content"></div>
-                <h6 className="text-sm">or use one of these options</h6>
+                <h6 className="text-sm text-base-content">or use one of these options</h6>
                 <div className="flex-1 border border-primary-content"></div>
             </div>
 
@@ -161,7 +161,7 @@ const Register = () => {
 
             <Link
                 to={'/form'}
-                className="text-sm text-accent mx-auto">Already Have an account? <span className="font-bold">Login</span>
+                className="text-sm text-primary mx-auto">Already Have an account? <span className="font-bold">Login</span>
             </Link>
 
 
