@@ -72,7 +72,7 @@ const Login = () => {
                     <div className="flex-1 relative">
                         <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter your password" className="border border-primary-content rounded-lg py-2.5 pl-4 outline-accent w-full pr-8" required />
 
-                        <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer">
+                        <span onClick={() => setShowPassword(!showPassword)} className="text-xl absolute top-3 right-2 cursor-pointer text-accent">
                             {
                                 showPassword ? <IoIosEye /> : <IoIosEyeOff />
                             }
